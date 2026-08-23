@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package store.order.v1;
+
+option go_package = "github.com/Sall-lah/store_proto/gen/go/store/order/v1;orderv1";
+
+// OrderStatus defines the complete lifecycle progression of a customer order.
+// Active states (PENDING_PAYMENT, PAID, PROCESSING, SHIPPED) block user account deletion
+// to prevent orphaned fulfillment processes or financial discrepancies.
+// Terminal states (COMPLETED, CANCELLED, EXPIRED) allow account deletion to proceed.
+enum OrderStatus {
+  // Default unspecified value to detect unset fields safely.
+  ORDER_STATUS_UNSPECIFIED = 0;
+
+  // Order created, awaiting Midtrans payment completion. (Active)
+  ORDER_STATUS_PENDING_PAYMENT = 1;
+
+  // Payment successfully settled, awaiting warehouse processing. (Active)
+  ORDER_STATUS_PAID = 2;
+
+  // Order being packed and prepared for shipment. (Active)
+  ORDER_STATUS_PROCESSING = 3;
+
+  // Order handed over to courier and currently in transit. (Active)
+  ORDER_STATUS_SHIPPED = 4;
+
+  // Order delivered and confirmed by customer or courier. (Terminal)
+  ORDER_STATUS_COMPLETED = 5;
+
+  // Order explicitly cancelled by customer or admin prior to shipment. (Terminal)
+  ORDER_STATUS_CANCELLED = 6;
+
+  // Payment time window expired without settlement. (Terminal)
+  ORDER_STATUS_EXPIRED = 7;
+}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package store.order.v1;
+
+import "store/order/v1/order_status.proto";
+
+option go_package = "github.com/Sall-lah/store_proto/gen/go/store/order/v1;orderv1";
+
+// OrderService exposes high-performance gRPC RPCs for inter-service order operations.
+// Used by the User Service to perform synchronous pre-flight checks before account lifecycle transitions.
+service OrderService {
+  // CheckActiveOrders inspects the order database to determine if a target user has any active,
+  // in-flight orders (PENDING_PAYMENT, PAID, PROCESSING, SHIPPED) that prevent account deletion.
+  rpc CheckActiveOrders (CheckActiveOrdersRequest) returns (CheckActiveOrdersResponse);
+}
+
+// CheckActiveOrdersRequest identifies the user whose orders are being evaluated.
+message CheckActiveOrdersRequest {
+  // Unique user identifier (e.g. UUID string or usr_ prefix) injected from Gateway / User Service.
+  string user_id = 1;
+}
+
+// ActiveOrderSummary provides lightweight metadata for an active order blocking deletion.
+message ActiveOrderSummary {
+  // Unique order UUID in the order service.
+  string order_id = 1;
+
+  // Human-readable reference number (e.g. ORD-20260823-1234).
+  string order_number = 2;
+
+  // Current lifecycle status of the order.
+  OrderStatus status = 3;
+
+  // Total gross transaction amount for the order.
+  double total_amount = 4;
+
+  // ISO 8601 timestamp string when the order was created.
+  string created_at = 5;
+}
+
+// CheckActiveOrdersResponse communicates the decision whether account deletion may proceed.
+message CheckActiveOrdersResponse {
+  // True if at least one order is in PENDING_PAYMENT, PAID, PROCESSING, or SHIPPED status.
+  bool has_active_orders = 1;
+
+  // Total count of blocking active orders found.
+  int32 active_order_count = 2;
+
+  // List of active order summaries to provide actionable feedback in the User Service rejection response.
+  repeated ActiveOrderSummary active_orders = 3;
+
+  // Human-readable message explaining the active order evaluation outcome.
+  string message = 4;
+}
