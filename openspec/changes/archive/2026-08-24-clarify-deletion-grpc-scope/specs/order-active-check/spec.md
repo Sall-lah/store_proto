@@ -1,16 +1,4 @@
-# Order Active Check Specification
-
-## Purpose
-Defines the gRPC service contract, data models, and active order lifecycle states for performing pre-deletion validation between User Service and Order Service.
-
-## Requirements
-
-### Requirement: Order Status Lifecycle Enumeration
-The protobuf schema SHALL define an `OrderStatus` enum under `proto/store/order/v1/order_status.proto` capturing all possible states in the order lifecycle.
-
-#### Scenario: OrderStatus enum values
-- **WHEN** the enum `OrderStatus` is compiled
-- **THEN** it MUST define `ORDER_STATUS_UNSPECIFIED = 0`, `ORDER_STATUS_PENDING_PAYMENT = 1`, `ORDER_STATUS_PAID = 2`, `ORDER_STATUS_PROCESSING = 3`, `ORDER_STATUS_SHIPPED = 4`, `ORDER_STATUS_COMPLETED = 5`, `ORDER_STATUS_CANCELLED = 6`, and `ORDER_STATUS_EXPIRED = 7`.
+## MODIFIED Requirements
 
 ### Requirement: Check Active Orders RPC Endpoint
 The `OrderService` protobuf service SHALL expose a `CheckActiveOrders` unary RPC endpoint under `proto/store/order/v1/order_service.proto` accepting `CheckActiveOrdersRequest` and returning `CheckActiveOrdersResponse` exclusively for user-initiated account deletion validation. Administrative bans and suspensions SHALL NOT utilize this RPC.

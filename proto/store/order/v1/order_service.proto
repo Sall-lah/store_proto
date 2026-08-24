@@ -7,10 +7,11 @@ import "store/order/v1/order_status.proto";
 option go_package = "github.com/Sall-lah/store_proto/gen/go/store/order/v1;orderv1";
 
 // OrderService exposes high-performance gRPC RPCs for inter-service order operations.
-// Used by the User Service to perform synchronous pre-flight checks before account lifecycle transitions.
+// Used by the User Service to perform synchronous pre-flight validation exclusively for user-initiated
+// account deletion. (Note: Admin bans/suspensions bypass gRPC and operate via event-driven Kafka topics).
 service OrderService {
   // CheckActiveOrders inspects the order database to determine if a target user has any active,
-  // in-flight orders (PENDING_PAYMENT, PAID, PROCESSING, SHIPPED) that prevent account deletion.
+  // in-flight orders (PENDING_PAYMENT, PAID, PROCESSING, SHIPPED) that prevent self-service account deletion.
   rpc CheckActiveOrders (CheckActiveOrdersRequest) returns (CheckActiveOrdersResponse);
 }
 
