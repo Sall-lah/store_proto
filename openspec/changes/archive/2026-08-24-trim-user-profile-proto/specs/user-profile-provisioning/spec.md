@@ -1,9 +1,4 @@
-# User Profile Provisioning Specification
-
-## Purpose
-Defines the gRPC service contract, data models, and idempotency semantics for provisioning user profile records between Auth Service (`store_auth`) and User Service (`store_user`).
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: User Profile Entity Schema
 The system SHALL define the protobuf schema for the `UserProfile` entity message within package `store.user.v1`.
@@ -27,13 +22,8 @@ The system SHALL define the `UserService` gRPC service interface containing the 
 - **WHEN** `CreateUserProfileResponse` is returned
 - **THEN** it contains the `UserProfile` message, a boolean `is_created` flag, and a human-readable `message` string.
 
-### Requirement: Idempotent Profile Provisioning Semantics
-The `CreateUserProfile` contract SHALL support idempotent replay without returning errors when a profile for the specified `user_id` already exists.
+## REMOVED Requirements
 
-#### Scenario: First-time profile creation
-- **WHEN** `CreateUserProfile` is called for a new `user_id`
-- **THEN** the response returns `is_created = true` and the newly created `profile`.
-
-#### Scenario: Duplicate or retried profile creation call
-- **WHEN** `CreateUserProfile` is called for a `user_id` that already has an existing profile record
-- **THEN** the response returns `is_created = false`, the existing `profile`, and a successful gRPC status code (`OK`).
+### Requirement: Gender Enumeration
+**Reason**: Demographic attributes (`gender`, `avatar_url`, `bio`, `date_of_birth`) are not needed by the application.
+**Migration**: Consumers should use only essential identity fields (`id`, `user_id`, `full_name`, `phone_number`, `address`).

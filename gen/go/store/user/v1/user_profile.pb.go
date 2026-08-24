@@ -21,68 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Gender represents the customer's declared gender identity.
-// Stored in the user profile and used for personalization and demographic preferences.
-type Gender int32
-
-const (
-	// Default unspecified value to prevent uninitialized assumptions.
-	Gender_GENDER_UNSPECIFIED Gender = 0
-	// Identifies as male.
-	Gender_GENDER_MALE Gender = 1
-	// Identifies as female.
-	Gender_GENDER_FEMALE Gender = 2
-	// Identifies as non-binary or other gender identity.
-	Gender_GENDER_OTHER Gender = 3
-	// User explicitly chose not to disclose gender.
-	Gender_GENDER_PREFER_NOT_TO_SAY Gender = 4
-)
-
-// Enum value maps for Gender.
-var (
-	Gender_name = map[int32]string{
-		0: "GENDER_UNSPECIFIED",
-		1: "GENDER_MALE",
-		2: "GENDER_FEMALE",
-		3: "GENDER_OTHER",
-		4: "GENDER_PREFER_NOT_TO_SAY",
-	}
-	Gender_value = map[string]int32{
-		"GENDER_UNSPECIFIED":       0,
-		"GENDER_MALE":              1,
-		"GENDER_FEMALE":            2,
-		"GENDER_OTHER":             3,
-		"GENDER_PREFER_NOT_TO_SAY": 4,
-	}
-)
-
-func (x Gender) Enum() *Gender {
-	p := new(Gender)
-	*p = x
-	return p
-}
-
-func (x Gender) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Gender) Descriptor() protoreflect.EnumDescriptor {
-	return file_store_user_v1_user_profile_proto_enumTypes[0].Descriptor()
-}
-
-func (Gender) Type() protoreflect.EnumType {
-	return &file_store_user_v1_user_profile_proto_enumTypes[0]
-}
-
-func (x Gender) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Gender.Descriptor instead.
-func (Gender) EnumDescriptor() ([]byte, []int) {
-	return file_store_user_v1_user_profile_proto_rawDescGZIP(), []int{0}
-}
-
 // UserProfile represents the core personal profile entity maintained in store_user.
 // Initialized upon successful OTP verification and updated during user onboarding.
 type UserProfile struct {
@@ -95,20 +33,12 @@ type UserProfile struct {
 	FullName string `protobuf:"bytes,3,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
 	// Optional contact phone number in E.164 international format.
 	PhoneNumber *string `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3,oneof" json:"phone_number,omitempty"`
-	// Optional URL pointing to the user's hosted avatar image.
-	AvatarUrl *string `protobuf:"bytes,5,opt,name=avatar_url,json=avatarUrl,proto3,oneof" json:"avatar_url,omitempty"`
-	// Optional short personal biography or summary.
-	Bio *string `protobuf:"bytes,6,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
 	// Optional physical shipping or residential address.
-	Address *string `protobuf:"bytes,7,opt,name=address,proto3,oneof" json:"address,omitempty"`
-	// Declared gender identity.
-	Gender Gender `protobuf:"varint,8,opt,name=gender,proto3,enum=store.user.v1.Gender" json:"gender,omitempty"`
-	// Optional date of birth formatted as ISO 8601 string (e.g. 1994-08-17T00:00:00Z).
-	DateOfBirth *string `protobuf:"bytes,9,opt,name=date_of_birth,json=dateOfBirth,proto3,oneof" json:"date_of_birth,omitempty"`
+	Address *string `protobuf:"bytes,5,opt,name=address,proto3,oneof" json:"address,omitempty"`
 	// ISO 8601 timestamp string when the profile was initially created.
-	CreatedAt string `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedAt string `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// ISO 8601 timestamp string when the profile was last modified.
-	UpdatedAt     string `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	UpdatedAt     string `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -171,37 +101,9 @@ func (x *UserProfile) GetPhoneNumber() string {
 	return ""
 }
 
-func (x *UserProfile) GetAvatarUrl() string {
-	if x != nil && x.AvatarUrl != nil {
-		return *x.AvatarUrl
-	}
-	return ""
-}
-
-func (x *UserProfile) GetBio() string {
-	if x != nil && x.Bio != nil {
-		return *x.Bio
-	}
-	return ""
-}
-
 func (x *UserProfile) GetAddress() string {
 	if x != nil && x.Address != nil {
 		return *x.Address
-	}
-	return ""
-}
-
-func (x *UserProfile) GetGender() Gender {
-	if x != nil {
-		return x.Gender
-	}
-	return Gender_GENDER_UNSPECIFIED
-}
-
-func (x *UserProfile) GetDateOfBirth() string {
-	if x != nil && x.DateOfBirth != nil {
-		return *x.DateOfBirth
 	}
 	return ""
 }
@@ -224,35 +126,20 @@ var File_store_user_v1_user_profile_proto protoreflect.FileDescriptor
 
 const file_store_user_v1_user_profile_proto_rawDesc = "" +
 	"\n" +
-	" store/user/v1/user_profile.proto\x12\rstore.user.v1\"\xb1\x03\n" +
+	" store/user/v1/user_profile.proto\x12\rstore.user.v1\"\xf5\x01\n" +
 	"\vUserProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1b\n" +
 	"\tfull_name\x18\x03 \x01(\tR\bfullName\x12&\n" +
-	"\fphone_number\x18\x04 \x01(\tH\x00R\vphoneNumber\x88\x01\x01\x12\"\n" +
+	"\fphone_number\x18\x04 \x01(\tH\x00R\vphoneNumber\x88\x01\x01\x12\x1d\n" +
+	"\aaddress\x18\x05 \x01(\tH\x01R\aaddress\x88\x01\x01\x12\x1d\n" +
 	"\n" +
-	"avatar_url\x18\x05 \x01(\tH\x01R\tavatarUrl\x88\x01\x01\x12\x15\n" +
-	"\x03bio\x18\x06 \x01(\tH\x02R\x03bio\x88\x01\x01\x12\x1d\n" +
-	"\aaddress\x18\a \x01(\tH\x03R\aaddress\x88\x01\x01\x12-\n" +
-	"\x06gender\x18\b \x01(\x0e2\x15.store.user.v1.GenderR\x06gender\x12'\n" +
-	"\rdate_of_birth\x18\t \x01(\tH\x04R\vdateOfBirth\x88\x01\x01\x12\x1d\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\n" +
-	" \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAtB\x0f\n" +
+	"\r_phone_numberB\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAtB\x0f\n" +
-	"\r_phone_numberB\r\n" +
-	"\v_avatar_urlB\x06\n" +
-	"\x04_bioB\n" +
-	"\n" +
-	"\b_addressB\x10\n" +
-	"\x0e_date_of_birth*t\n" +
-	"\x06Gender\x12\x16\n" +
-	"\x12GENDER_UNSPECIFIED\x10\x00\x12\x0f\n" +
-	"\vGENDER_MALE\x10\x01\x12\x11\n" +
-	"\rGENDER_FEMALE\x10\x02\x12\x10\n" +
-	"\fGENDER_OTHER\x10\x03\x12\x1c\n" +
-	"\x18GENDER_PREFER_NOT_TO_SAY\x10\x04B=Z;github.com/Sall-lah/store_proto/gen/go/store/user/v1;userv1b\x06proto3"
+	"\b_addressB=Z;github.com/Sall-lah/store_proto/gen/go/store/user/v1;userv1b\x06proto3"
 
 var (
 	file_store_user_v1_user_profile_proto_rawDescOnce sync.Once
@@ -266,19 +153,16 @@ func file_store_user_v1_user_profile_proto_rawDescGZIP() []byte {
 	return file_store_user_v1_user_profile_proto_rawDescData
 }
 
-var file_store_user_v1_user_profile_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_store_user_v1_user_profile_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_store_user_v1_user_profile_proto_goTypes = []any{
-	(Gender)(0),         // 0: store.user.v1.Gender
-	(*UserProfile)(nil), // 1: store.user.v1.UserProfile
+	(*UserProfile)(nil), // 0: store.user.v1.UserProfile
 }
 var file_store_user_v1_user_profile_proto_depIdxs = []int32{
-	0, // 0: store.user.v1.UserProfile.gender:type_name -> store.user.v1.Gender
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_store_user_v1_user_profile_proto_init() }
@@ -292,14 +176,13 @@ func file_store_user_v1_user_profile_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_store_user_v1_user_profile_proto_rawDesc), len(file_store_user_v1_user_profile_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_store_user_v1_user_profile_proto_goTypes,
 		DependencyIndexes: file_store_user_v1_user_profile_proto_depIdxs,
-		EnumInfos:         file_store_user_v1_user_profile_proto_enumTypes,
 		MessageInfos:      file_store_user_v1_user_profile_proto_msgTypes,
 	}.Build()
 	File_store_user_v1_user_profile_proto = out.File

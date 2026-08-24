@@ -29,9 +29,6 @@ message CreateUserProfileRequest {
 
   // Optional phone number if captured during signup.
   optional string phone_number = 4;
-
-  // Optional initial avatar URL.
-  optional string avatar_url = 5;
 }
 
 // CreateUserProfileResponse returns the provisioned profile and creation status metadata.

@@ -31,9 +31,7 @@ type CreateUserProfileRequest struct {
 	// Registered email address.
 	Email string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	// Optional phone number if captured during signup.
-	PhoneNumber *string `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3,oneof" json:"phone_number,omitempty"`
-	// Optional initial avatar URL.
-	AvatarUrl     *string `protobuf:"bytes,5,opt,name=avatar_url,json=avatarUrl,proto3,oneof" json:"avatar_url,omitempty"`
+	PhoneNumber   *string `protobuf:"bytes,4,opt,name=phone_number,json=phoneNumber,proto3,oneof" json:"phone_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -92,13 +90,6 @@ func (x *CreateUserProfileRequest) GetEmail() string {
 func (x *CreateUserProfileRequest) GetPhoneNumber() string {
 	if x != nil && x.PhoneNumber != nil {
 		return *x.PhoneNumber
-	}
-	return ""
-}
-
-func (x *CreateUserProfileRequest) GetAvatarUrl() string {
-	if x != nil && x.AvatarUrl != nil {
-		return *x.AvatarUrl
 	}
 	return ""
 }
@@ -171,16 +162,13 @@ var File_store_user_v1_user_service_proto protoreflect.FileDescriptor
 
 const file_store_user_v1_user_service_proto_rawDesc = "" +
 	"\n" +
-	" store/user/v1/user_service.proto\x12\rstore.user.v1\x1a store/user/v1/user_profile.proto\"\xd2\x01\n" +
+	" store/user/v1/user_service.proto\x12\rstore.user.v1\x1a store/user/v1/user_profile.proto\"\x9f\x01\n" +
 	"\x18CreateUserProfileRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1b\n" +
 	"\tfull_name\x18\x02 \x01(\tR\bfullName\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12&\n" +
-	"\fphone_number\x18\x04 \x01(\tH\x00R\vphoneNumber\x88\x01\x01\x12\"\n" +
-	"\n" +
-	"avatar_url\x18\x05 \x01(\tH\x01R\tavatarUrl\x88\x01\x01B\x0f\n" +
-	"\r_phone_numberB\r\n" +
-	"\v_avatar_url\"\x8a\x01\n" +
+	"\fphone_number\x18\x04 \x01(\tH\x00R\vphoneNumber\x88\x01\x01B\x0f\n" +
+	"\r_phone_number\"\x8a\x01\n" +
 	"\x19CreateUserProfileResponse\x124\n" +
 	"\aprofile\x18\x01 \x01(\v2\x1a.store.user.v1.UserProfileR\aprofile\x12\x1d\n" +
 	"\n" +
