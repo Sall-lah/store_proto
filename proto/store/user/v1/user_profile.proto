@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package store.user.v1;
+
+option go_package = "github.com/Sall-lah/store_proto/gen/go/store/user/v1;userv1";
+
+// Gender represents the customer's declared gender identity.
+// Stored in the user profile and used for personalization and demographic preferences.
+enum Gender {
+  // Default unspecified value to prevent uninitialized assumptions.
+  GENDER_UNSPECIFIED = 0;
+
+  // Identifies as male.
+  GENDER_MALE = 1;
+
+  // Identifies as female.
+  GENDER_FEMALE = 2;
+
+  // Identifies as non-binary or other gender identity.
+  GENDER_OTHER = 3;
+
+  // User explicitly chose not to disclose gender.
+  GENDER_PREFER_NOT_TO_SAY = 4;
+}
+
+// UserProfile represents the core personal profile entity maintained in store_user.
+// Initialized upon successful OTP verification and updated during user onboarding.
+message UserProfile {
+  // Unique profile identifier (UUID).
+  string id = 1;
+
+  // Unique foreign key reference to the authenticated user UUID in store_auth.
+  string user_id = 2;
+
+  // User's full display name.
+  string full_name = 3;
+
+  // Optional contact phone number in E.164 international format.
+  optional string phone_number = 4;
+
+  // Optional URL pointing to the user's hosted avatar image.
+  optional string avatar_url = 5;
+
+  // Optional short personal biography or summary.
+  optional string bio = 6;
+
+  // Optional physical shipping or residential address.
+  optional string address = 7;
+
+  // Declared gender identity.
+  Gender gender = 8;
+
+  // Optional date of birth formatted as ISO 8601 string (e.g. 1994-08-17T00:00:00Z).
+  optional string date_of_birth = 9;
+
+  // ISO 8601 timestamp string when the profile was initially created.
+  string created_at = 10;
+
+  // ISO 8601 timestamp string when the profile was last modified.
+  string updated_at = 11;
+}
