@@ -1,5 +1,7 @@
 # Agent directory
-.agent/
+.agent
+graphify-out
+openspec
 
 # Environment variables
 .env
